@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        @include('nav.nav')
+        <div class="jumbotron text-center">
+            <h1>Training assignment for a PHP developer</h1>
+        </div>
+        <div class="container">
+            @guest
+            @else
+                <button type="button" class="btn btn-default" onclick="window.location='{{ url("/home/create") }}'">+Create new ad</button>
+
+            @endguest
+        </div>
+        <div class="container" id="con">
+            <br></br>
+            @include('Messages.message')
+            <div class="starter-template" id="start">
+                @yield('content')
+            </div>
+        </div><!-- /.container -->
+        <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    </div>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var path=window.location.pathname;
+        var interval;
+        if(path=="/home"||path=="/home/sort/desc")
+        $(document).ready(function(){
+            interval=setInterval(function(){
+                $("#start").load("/Main_reload")
+            },3000);
+        });
+        else
+        {
+            clearInterval(interval);
+        }
+    </script>
+</body>
+</html>
